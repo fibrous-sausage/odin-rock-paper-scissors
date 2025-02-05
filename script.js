@@ -28,18 +28,26 @@ let humanScore = 0;
 let computerScore = 0;
 
 function playRound(humanChoice, computerChoice) {
-    switch (humanChoice.toLowerCase()) {
-        case "rock":
-            if (computerChoice === "paper") { ++computerScore; }
-            if (computerChoice === "scissors") { ++humanScore; }
-            break;
-        case "paper":
-            if (computerChoice === "rock") { ++humanScore; }
-            if (computerChoice === "scissors") { ++computerScore; }
-            break;
-        case "scissors":
-            if (computerChoice === "rock") { ++computerScore; }
-            if (computerChoice === "paper") { ++humanScore; }
-            break;
+    // We already sanitize the input above but it can't hurt to do it again.
+    humanChoice.toLowerCase();
+    computerChoice.toLowerCase();
+
+    // 3 cases: human wins, computer wins, it's a tie. Tie results if neither wins.
+    const humanWin = (humanChoice === "rock" && computerChoice === "scissors")
+                || (humanChoice === "paper" && computerChoice === "rock")
+                || (humanChoice === "scissors" && computerChoice === "paper");
+
+    const computerWin = (computerChoice === "rock" && humanChoice === "scissors")
+                || (computerChoice === "paper" && humanChoice === "rock")
+                || (computerChoice === "scissors" && humanChoice === "paper");
+    
+    if (humanWin) {
+        ++humanScore;
+        console.log(`You win! ${humanChoice} beats ${computerChoice}!`);
+    } else if (computerWin) {
+        ++computerScore;
+        console.log(`Computer wins! ${computerChoice} beats ${humanChoice}!`);
+    } else {
+        console.log(`Tie! You played ${humanChoice} and the computer played ${computerChoice}!`);
     }
 }
