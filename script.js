@@ -59,10 +59,8 @@ function playGame() {
     alert(`Rock paper scissors. Best of ${NUM_ROUNDS}. GO!`);
 
     for (let i = 0; i < NUM_ROUNDS; ++i) {
-        // No need for a default statement, there are no
-        // other cases for playRound to return
         let humanChoice = getHumanChoice();
-        let getComputerChoice = getComputerChoice();
+        let computerChoice = getComputerChoice();
         switch (playRound(humanChoice, computerChoice)) {
             case HUMAN_WINS:
                 alert(`You win this round! ${humanChoice} beats ${computerChoice}!`);
