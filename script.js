@@ -61,7 +61,9 @@ function playGame() {
     for (let i = 0; i < NUM_ROUNDS; ++i) {
         // No need for a default statement, there are no
         // other cases for playRound to return
-        switch (playRound(getHumanChoice(), getComputerChoice())) {
+        let humanChoice = getHumanChoice();
+        let getComputerChoice = getComputerChoice();
+        switch (playRound(humanChoice, computerChoice)) {
             case HUMAN_WINS:
                 alert(`You win this round! ${humanChoice} beats ${computerChoice}!`);
                 ++humanScore;
