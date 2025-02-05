@@ -71,6 +71,8 @@ function playGame() {
                 ++computerScore;
                 break;
             case TIE:
+                ++humanScore;
+                ++computerScore;
                 alert(`Round tie! You played ${humanChoice} and the computer played ${computerChoice}!`);
                 break;
         }
