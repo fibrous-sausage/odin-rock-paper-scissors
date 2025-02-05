@@ -1,3 +1,7 @@
+const HUMAN_WINS = 0;
+const COMPUTER_WINS = 1;
+const TIE = 2;
+
 function getComputerChoice() {
     const choice = Math.floor(Math.random() * 3);
     switch(choice) {
@@ -24,9 +28,6 @@ function getHumanChoice() {
     }
 }
 
-let humanScore = 0;
-let computerScore = 0;
-
 function playRound(humanChoice, computerChoice) {
     // We already sanitize the input above but it can't hurt to do it again.
     humanChoice.toLowerCase();
@@ -42,12 +43,46 @@ function playRound(humanChoice, computerChoice) {
                 || (computerChoice === "scissors" && humanChoice === "paper");
     
     if (humanWin) {
-        ++humanScore;
-        console.log(`You win! ${humanChoice} beats ${computerChoice}!`);
+        return HUMAN_WINS;
     } else if (computerWin) {
-        ++computerScore;
-        console.log(`Computer wins! ${computerChoice} beats ${humanChoice}!`);
+        return COMPUTER_WINS;
     } else {
-        console.log(`Tie! You played ${humanChoice} and the computer played ${computerChoice}!`);
+        return TIE;
     }
 }
+
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+    const NUM_ROUNDS = 5;
+
+    alert(`Rock paper scissors. Best of ${NUM_ROUNDS}. GO!`);
+
+    for (let i = 0; i < NUM_ROUNDS; ++i) {
+        // No need for a default statement, there are no
+        // other cases for playRound to return
+        switch (playRound()) {
+            case HUMAN_WINS:
+                alert(`You win this round! ${humanChoice} beats ${computerChoice}!`);
+                ++humanScore;
+                break;
+            case COMPUTER_WINS:
+                alert(`Computer wins this round! ${computerChoice} beats ${humanChoice}!`);
+                ++computerScore;
+                break;
+            case TIE:
+                alert(`Round tie! You played ${humanChoice} and the computer played ${computerChoice}!`);
+                break;
+        }
+    }
+
+    if (humanScore > computerScore) {
+        alert(`You won! Your score: ${humanScore}, Computer's score: ${computerScore}`);
+    } else if (humanScore < computerScore) {
+        alert(`Computer won! Your score: ${humanScore}, Computer's score: ${computerScore}`);
+    } else {
+        alert(`Tie! Your score: ${humanScore}, Computer's score: ${computerScore}`);
+    }
+}
+
+playGame();
