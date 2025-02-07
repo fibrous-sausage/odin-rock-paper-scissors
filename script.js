@@ -102,10 +102,10 @@ document.querySelector("#player-choices")
                 }
             } else {
                 roundPlayedDisplay.textContent = `Game over`;
-                
+
                 if (playerScore > computerScore) {
                     gameStateDisplay.textContent = `You won!`;
-                } else if (computerScore < playerScore) {
+                } else if (playerScore < computerScore) {
                     gameStateDisplay.textContent = `Computer won!`;
                 } else {
                     gameStateDisplay.textContent = `Game tie!`;
