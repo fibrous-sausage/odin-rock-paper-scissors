@@ -53,7 +53,7 @@ let computerScore = 0;
 let roundsPlayed = 0;
 let gameOver = false;
 
-const results = [...document.querySelectorAll("#results span")];
+const results = [...document.querySelectorAll("#results p")];
 const choiceDisplay = results[0]
 const gameStateDisplay = results[1];
 const roundPlayedDisplay = results[2];
