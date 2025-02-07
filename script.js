@@ -39,20 +39,30 @@ function playRound(playerChoice, computerChoice) {
     }
 }
 
+function choiceToEmoji(choice) {
+    switch(choice) {
+        case "rock": return "🪨";
+        case "paper": return "📄";
+        case "scissors": return "✂️";
+        default: "";
+    }
+}
+
 let playerScore = 0;
 let computerScore = 0;
 let roundsPlayed = 0;
+let gameOver = false;
 
-const results = [...document.querySelectorAll("#results p")];
-const gameStateDisplay = results[0];
-const roundPlayedDisplay = results[1];
-const playerScoreDisplay = results[2];
-const computerScoreDisplay = results[3];
-
+const results = [...document.querySelectorAll("#results span")];
+const choiceDisplay = results[0]
+const gameStateDisplay = results[1];
+const roundPlayedDisplay = results[2];
+const playerScoreDisplay = results[3];
+const computerScoreDisplay = results[4];
 
 document.querySelector("#player-choices")
         .addEventListener('click', (event) => {
-            if (roundsPlayed >= 5) return;
+            if (gameOver) return;
 
             const playerChoice = event.target.id;
             const computerChoice = getComputerChoice();
@@ -70,20 +80,15 @@ document.querySelector("#player-choices")
             }
 
             ++roundsPlayed;
+            gameOver = roundsPlayed === 5;
 
             playerScoreDisplay.textContent = `Player score: ${playerScore}`;
             computerScoreDisplay.textContent = `Computer score: ${computerScore}`;
+            choiceDisplay.textContent = `${choiceToEmoji(playerChoice)} vs. ${choiceToEmoji(computerChoice)}`;
 
-            if (roundsPlayed === 5) {
-                roundPlayedDisplay.textContent = `Game over`;
-                if (playerScore > computerScore) {
-                    gameStateDisplay.textContent = `You won!`;
-                } else if (computerScore < playerScore) {
-                    gameStateDisplay.textContent = `Computer won!`;
-                } else {
-                    gameStateDisplay.textContent = `Game tie!`;
-                }
-            } else {
+            if (!gameOver) {
+                roundPlayedDisplay.textContent = `Round ${roundsPlayed + 1}`;
+
                 switch (roundResult) {
                     case PLAYER_WINS:
                     gameStateDisplay.textContent = `You won this round!`;
@@ -95,6 +100,14 @@ document.querySelector("#player-choices")
                     gameStateDisplay.textContent = `Round tie!`;
                     break;
                 }
-                roundPlayedDisplay.textContent = `Round ${roundsPlayed + 1}`;
+                roundPlayedDisplay.textContent = `Game over`;
+            } else {
+                if (playerScore > computerScore) {
+                    gameStateDisplay.textContent = `You won!`;
+                } else if (computerScore < playerScore) {
+                    gameStateDisplay.textContent = `Computer won!`;
+                } else {
+                    gameStateDisplay.textContent = `Game tie!`;
+                }
             }
 });
