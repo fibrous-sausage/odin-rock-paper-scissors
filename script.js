@@ -16,18 +16,6 @@ function getComputerChoice() {
     }
 }
 
-function getHumanChoice() {
-    let choice = prompt("What will you play? (rock, paper, scissors)").toLowerCase();
-    switch(choice) {
-        case "rock":
-        case "paper":
-        case "scissors":
-            return choice;
-        default:
-            return getHumanChoice();
-    }
-}
-
 function playRound(humanChoice, computerChoice) {
     // We already sanitize the input above but it can't hurt to do it again.
     humanChoice.toLowerCase();
@@ -50,3 +38,40 @@ function playRound(humanChoice, computerChoice) {
         return TIE;
     }
 }
+
+let humanScore = 0;
+let computerScore = 0;
+let roundsPlayed = 0;
+
+document.querySelector("#player-choices")
+        .addEventListener('click', (event) => {
+            if (roundsPlayed > 5) return;
+
+            const humanChoice = event.target.id;
+            const computerChoice = getComputerChoice();
+            switch(playRound(humanChoice, computerChoice)) {
+                case HUMAN_WINS:
+                    console.log(`You won this round! Computer played ${computerChoice}`);
+                    ++humanScore;
+                    break;
+                case COMPUTER_WINS:
+                    console.log(`Computer won this round! Computer played ${computerChoice}`);
+                    ++computerScore;
+                    break;
+                case TIE:
+                    console.log(`Round tie! Computer played ${computerChoice}`);
+                    break;
+            }
+
+            ++roundsPlayed;
+
+            if (roundsPlayed === 5) {
+                if (humanScore > computerScore) {
+                    console.log(`You won! Your score: ${humanScore}, Computer's score: ${computerScore}`);
+                } else if (computerScore < humanScore) {
+                    console.log(`Computer won! Your score: ${humanScore}, Computer's score: ${computerScore}`);
+                } else {
+                    console.log(`Game tie! Your score: ${humanScore}, Computer's score: ${computerScore}`);
+                }
+            }
+});
