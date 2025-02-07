@@ -45,7 +45,7 @@ let roundsPlayed = 0;
 
 document.querySelector("#player-choices")
         .addEventListener('click', (event) => {
-            if (roundsPlayed > 5) return;
+            if (roundsPlayed >= 5) return;
 
             const humanChoice = event.target.id;
             const computerChoice = getComputerChoice();
